@@ -1,123 +1,87 @@
 erDiagram
-    %% EER Diagram for Smart Healthcare Management System
-    %% Using Mermaid's ER Diagram syntax to represent EER concepts.
-    %% Specialization/Generalization is represented using comments and structure.
+    %% EER Diagram (conceptual): Supertype/Subtype + key constraints.
+    %% Note: Mermaid ER diagrams don't enforce EER constraints (total/disjoint) —
+    %% the PostgreSQL implementation models the structure, while strict total/disjoint
+    %% constraints are not enforced by the schema.
 
-    %% --- Entities and Attributes ---
-
-    entity app_user {
+    %% --- Supertype ---
+    app_user {
         int user_id PK
         varchar first_name
         varchar last_name
         varchar email UK
         varchar password_hash
         date date_of_birth
-        varchar street "Composite Attribute: Address"
-        varchar district "Composite Attribute: Address"
-        varchar city "Composite Attribute: Address"
-        varchar postal_code "Composite Attribute: Address"
-        varchar country "Composite Attribute: Address"
+        varchar street
+        varchar district
+        varchar city
+        varchar postal_code
+        varchar country
         timestamp created_at
     }
 
-    entity user_phone {
-        int user_id PK, FK
-        varchar phone_number PK
-    }
-    note for user_phone "Multivalued Attribute: Represents multiple phone numbers for a user."
-
-    %% --- Specialization/Generalization ---
-    %% 'app_user' is the supertype.
-    %% 'patient', 'doctor', and 'admin' are subtypes.
-    %% This is a total, disjoint specialization. Every app_user must be one of these three types.
-
-    entity patient {
+    %% --- Subtypes (specializations) ---
+    patient {
         int patient_id PK "FK to app_user.user_id"
         varchar emergency_contact_name
         varchar emergency_contact_phone
     }
 
-    entity doctor {
+    doctor {
         int doctor_id PK "FK to app_user.user_id"
         varchar license_number UK
         int department_id FK
     }
 
-    entity admin {
+    admin {
         int admin_id PK "FK to app_user.user_id"
-        varchar permissions
+        text permissions
     }
 
-    %% --- Other Entities ---
+    %% --- Multivalued attributes ---
+    user_phone {
+        int user_id PK, FK
+        varchar phone_number PK
+    }
 
-    entity hospital {
+    patient_allergy {
+        int patient_id PK, FK
+        varchar allergy_name PK
+    }
+
+    %% --- Core entities needed for the specialization context ---
+    hospital {
         int hospital_id PK
         varchar name
         varchar address
     }
 
-    entity department {
+    department {
         int department_id PK
         int hospital_id FK
         varchar name
     }
 
-    entity specialty {
+    specialty {
         int specialty_id PK
         varchar name UK
     }
 
-    entity appointment {
-        int appointment_id PK
-        int patient_id FK
-        int doctor_id FK
-        timestamp appointment_datetime
-        varchar status
-    }
-
-    entity prescription {
-        int prescription_id PK
-        int record_id FK
-        date prescription_date
-    }
-
-    entity prescription_item {
-        int prescription_id PK, FK
-        int item_number PK
-        int medication_id FK
-        varchar dosage
-        varchar frequency
-    }
-    note for prescription_item "Weak Entity: Dependent on 'prescription'. 'item_number' is a partial key."
-
-    entity medication {
-        int medication_id PK
-        varchar name
+    doctor_specialty {
+        int doctor_id PK, FK
+        int specialty_id PK, FK
     }
 
     %% --- Relationships ---
+    app_user ||--o{ patient : "is a"
+    app_user ||--o{ doctor : "is a"
+    app_user ||--o{ admin : "is a"
+    app_user ||--|{ user_phone : "has"
 
-    app_user ||--o{ patient : "specializes as"
-    app_user ||--o{ doctor : "specializes as"
-    app_user ||--o{ admin : "specializes as"
+    patient ||--|{ patient_allergy : "has"
 
-    app_user }|..|| user_phone : "has"
-
-    hospital ||--|{ department : "has"
+    hospital ||--|{ department : "contains"
     department ||--o{ doctor : "employs"
 
-    doctor }|--|{ doctor_specialty : "has"
-    specialty }|--|{ doctor_specialty : "is a"
-    note for doctor_specialty "N:M Relationship between Doctor and Specialty"
-
-    patient ||--o{ appointment : "schedules"
-    doctor ||--o{ appointment : "attends"
-
-    prescription ||--|{ prescription_item : "contains"
-    note for prescription_item "Identifying Relationship for weak entity 'prescription_item'"
-
-    medication ||--o{ prescription_item : "is prescribed in"
-
-    patient }|--|{ patient_insurance : "has"
-    insurance_provider }|--|{ patient_insurance : "is provided by"
-    note for patient_insurance "N:M Relationship between Patient and Insurance Provider"
+    doctor ||--|{ doctor_specialty : "has"
+    specialty ||--|{ doctor_specialty : "defines"

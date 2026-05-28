@@ -69,11 +69,11 @@ The main table now looks like this:
 Our `appointment_info_1nf` table has a single-column primary key (`appointment_id`), so it is trivially in 2NF. However, it suffers from transitive dependencies, which are addressed by 3NF. Let's identify the functional dependencies to prepare for 3NF.
 
 **Functional Dependencies in `appointment_info_1nf`:**
-- `appointment_id` → `appointment_datetime`, `patient_id`, `doctor_id`
-- `patient_id` → `patient_first_name`, `patient_last_name`, `patient_dob` (Partial Dependency if PK was composite)
-- `doctor_id` → `doctor_first_name`, `doctor_last_name`, `doctor_license`, `department_id`
-- `department_id` → `department_name`, `hospital_id`
-- `hospital_id` → `hospital_name`
+- `appointment_id` -> `appointment_datetime`, `patient_id`, `doctor_id`
+- `patient_id` -> `patient_first_name`, `patient_last_name`, `patient_dob` (Partial Dependency if PK was composite)
+- `doctor_id` -> `doctor_first_name`, `doctor_last_name`, `doctor_license`, `department_id`
+- `department_id` -> `department_name`, `hospital_id`
+- `hospital_id` -> `hospital_name`
 
 The dependencies on `patient_id`, `doctor_id`, etc., are **transitive dependencies**.
 

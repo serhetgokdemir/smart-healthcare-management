@@ -9,7 +9,7 @@ The following SQL script contains the \texttt{CREATE TABLE} statements for all t
 \subsection{Mapping Rules Applied}
 Key mapping decisions included:
 \begin{itemize}
-    \item \textbf{N:M Relationships:} Many-to-many relationships, such as `Doctor\_Department`, were implemented using a separate linking table.
-    \item \textbf{Weak Entities:} Weak entities like `Prescription` are identified by a foreign key from their owner entity (`Patient` or `Appointment`).
-    \item \textbf{Multivalued Attributes:} If any existed, they would be handled by creating a separate table.
+    \item \textbf{N:M Relationships:} Many-to-many relationships were implemented using separate linking tables (e.g., \texttt{doctor\_specialty} for Doctor--Specialty and \texttt{patient\_insurance} for Patient--Insurance Provider).
+    \item \textbf{Weak Entities:} \texttt{prescription\_item} is modeled as a weak entity identified by its owning \texttt{prescription} plus a partial key (\texttt{item\_number}).
+    \item \textbf{Multivalued Attributes:} Multivalued attributes are handled via separate tables (e.g., \texttt{user\_phone} and \texttt{patient\_allergy}).
 \end{itemize}

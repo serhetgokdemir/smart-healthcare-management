@@ -13,7 +13,7 @@ The Entity-Relationship (ER) diagram provides a high-level view of the database 
 \textit{Note: You need to export your Mermaid 'er\_diagram.mmd' as a PNG file and place it in the parent project folder.}
 
 \subsection{Enhanced ER (EER) Diagram}
-The Enhanced ER (EER) diagram extends the ER model with concepts like specialization and generalization. In our model, a `User` entity could be generalized from `Patient`, `Doctor`, and `Admin` entities.
+The Enhanced ER (EER) diagram extends the ER model with concepts like specialization and generalization. In our model, an \texttt{app\_user} supertype is specialized into \texttt{patient}, \texttt{doctor}, and \texttt{admin} subtypes.
 
 \begin{figure}[h!]
     \centering
@@ -25,4 +25,4 @@ The Enhanced ER (EER) diagram extends the ER model with concepts like specializa
 \textit{Note: You need to export your Mermaid 'eer\_diagram.mmd' as a PNG file and place it in the parent project folder.}
 
 \subsubsection{Explanation of EER Concepts}
-Here, we used specialization to model different types of users. For example, `Doctor` and `Patient` are specializations of a more general `Person` or `User` entity, inheriting common attributes like name and contact information while also having their own specific attributes.
+Here, we used specialization to model different types of users. For example, \texttt{doctor} and \texttt{patient} are specializations of a more general \texttt{app\_user} entity, inheriting common attributes like name and contact information while also having their own specific attributes.

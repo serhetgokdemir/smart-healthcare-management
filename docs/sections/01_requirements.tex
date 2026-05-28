@@ -30,7 +30,8 @@ Key relationships between entities include:
 \begin{itemize}
     \item A \textbf{Doctor} can have many \textbf{Patients} (1-to-N).
     \item A \textbf{Patient} can have many \textbf{Appointments} (1-to-N).
-    \item A \textbf{Doctor} can work in multiple \textbf{Departments} (N-to-M), which requires a linking table.
+    \item A \textbf{Hospital} has many \textbf{Departments} (1-to-N), and each \textbf{Doctor} belongs to one \textbf{Department} (N-to-1).
+    \item A \textbf{Doctor} can have multiple \textbf{Specialties} (N-to-M), implemented via a linking table.
     \item An \textbf{Appointment} must be associated with exactly one \textbf{Patient} and one \textbf{Doctor}.
 \end{itemize}
 

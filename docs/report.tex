@@ -2,6 +2,7 @@
 
 % --- PACKAGES ---
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{listings}
@@ -24,6 +25,7 @@
 }
 
 % --- LISTINGS (CODE) SETUP ---
+\lstdefinelanguage{text}{}
 \lstset{
     language=SQL,
     basicstyle=\ttfamily\small,
@@ -46,6 +48,10 @@
 % --- DOCUMENT START ---
 \begin{document}
 
+% Avoid duplicate page anchors by not reusing page numbers in the PDF
+\hypersetup{pageanchor=false}
+\pagenumbering{gobble}
+
 \maketitle
 \thispagestyle{empty}
 
@@ -54,7 +60,8 @@
 \thispagestyle{empty}
 
 \newpage
-\setcounter{page}{1}
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
 
 % --- SECTIONS ---
 \input{sections/01_requirements.tex}

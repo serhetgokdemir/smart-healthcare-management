@@ -35,7 +35,7 @@ JOIN app_user d_user ON doc.doctor_id = d_user.user_id
 JOIN appointment a ON doc.doctor_id = a.doctor_id
 WHERE a.status IN ('scheduled', 'completed')
 GROUP BY doc.doctor_id, d_user.first_name, d_user.last_name
-HAVING COUNT(a.appointment_id) > 1
+HAVING COUNT(a.appointment_id) > 2
 ORDER BY appointment_count DESC;
 
 
@@ -128,7 +128,7 @@ WHERE lr.patient_id = 1
 ORDER BY lr.result_date DESC;
 
 
--- Query 9: Find doctors specialized in 'Cardiology' working at 'City General Hospital'.
+-- Query 9: Find doctors in the 'Cardiology' department at 'City General Hospital' and list their specialties.
 -- Demonstrates: Multiple JOINs, filtering by text fields.
 SELECT
     d_user.first_name,
