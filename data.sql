@@ -27,18 +27,19 @@ INSERT INTO department (hospital_id, name) VALUES
 -- -------------------------------------------------
 -- Users (Patients, Doctors, Admin)
 -- -------------------------------------------------
--- Passwords are 'password123' hashed (example hash)
+-- Password hashes are demo placeholders (not real hashes, not for production)
+
 INSERT INTO app_user (first_name, last_name, email, password_hash, date_of_birth, street, district, city, postal_code, country) VALUES
-('John', 'Smith', 'john.smith@example.com', '...', '1985-02-10', '10 Maple Dr', 'Central', 'Metroville', '10001', 'USA'),
-('Jane', 'Doe', 'jane.doe@example.com', '...', '1990-07-22', '20 Oak Ln', 'North', 'Metroville', '10002', 'USA'),
-('Peter', 'Jones', 'peter.jones@example.com', '...', '1978-11-30', '30 Pine St', 'West', 'Suburbia', '20002', 'USA'),
-('Mary', 'Williams', 'mary.williams@example.com', '...', '2018-05-15', '40 Birch Rd', 'East', 'Suburbia', '20003', 'USA'),
-('David', 'Brown', 'david.brown@example.com', '...', '1995-01-01', '50 Elm Ct', 'South', 'Highlands', '30003', 'USA'),
-('Emily', 'Davis', 'emily.davis@example.com', '...', '1982-03-14', '101 Heartbeat Blvd', 'Medical District', 'Metroville', '10004', 'USA'),
-('Michael', 'Miller', 'michael.miller@example.com', '...', '1975-09-20', '202 Brainwave Rd', 'Medical District', 'Metroville', '10004', 'USA'),
-('Sarah', 'Wilson', 'sarah.wilson@example.com', '...', '1988-12-01', '303 Skincare Ave', 'Downtown', 'Suburbia', '20002', 'USA'),
-('Chris', 'Taylor', 'chris.taylor@example.com', '...', '1991-06-25', '404 Bonebreak Hill', 'Uptown', 'Highlands', '30004', 'USA'),
-('Admin', 'User', 'admin@healthcare.system', '...', '1980-01-01', '1 Admin Way', 'System', 'Server City', '99999', 'USA');
+('John', 'Smith', 'john.smith@example.com', 'DEMO_HASH_password123_john', '1985-02-10', '10 Maple Dr', 'Central', 'Metroville', '10001', 'USA'),
+('Jane', 'Doe', 'jane.doe@example.com', 'DEMO_HASH_password123_jane', '1990-07-22', '20 Oak Ln', 'North', 'Metroville', '10002', 'USA'),
+('Peter', 'Jones', 'peter.jones@example.com', 'DEMO_HASH_password123_peter', '1978-11-30', '30 Pine St', 'West', 'Suburbia', '20002', 'USA'),
+('Mary', 'Williams', 'mary.williams@example.com', 'DEMO_HASH_password123_mary', '2018-05-15', '40 Birch Rd', 'East', 'Suburbia', '20003', 'USA'),
+('David', 'Brown', 'david.brown@example.com', 'DEMO_HASH_password123_david', '1995-01-01', '50 Elm Ct', 'South', 'Highlands', '30003', 'USA'),
+('Emily', 'Davis', 'emily.davis@example.com', 'DEMO_HASH_password123_emily', '1982-03-14', '101 Heartbeat Blvd', 'Medical District', 'Metroville', '10004', 'USA'),
+('Michael', 'Miller', 'michael.miller@example.com', 'DEMO_HASH_password123_michael', '1975-09-20', '202 Brainwave Rd', 'Medical District', 'Metroville', '10004', 'USA'),
+('Sarah', 'Wilson', 'sarah.wilson@example.com', 'DEMO_HASH_password123_sarah', '1988-12-01', '303 Skincare Ave', 'Downtown', 'Suburbia', '20002', 'USA'),
+('Chris', 'Taylor', 'chris.taylor@example.com', 'DEMO_HASH_password123_chris', '1991-06-25', '404 Bonebreak Hill', 'Uptown', 'Highlands', '30004', 'USA'),
+('Admin', 'User', 'admin@healthcare.system', 'DEMO_HASH_password123_admin', '1980-01-01', '1 Admin Way', 'System', 'Server City', '99999', 'USA');
 
 -- Patients (IDs 1-5)
 INSERT INTO patient (patient_id, emergency_contact_name, emergency_contact_phone) VALUES
