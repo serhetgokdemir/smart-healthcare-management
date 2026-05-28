@@ -112,13 +112,12 @@ CREATE TABLE appointment (
     status VARCHAR(20) NOT NULL CHECK (status IN ('scheduled', 'completed', 'cancelled', 'no-show')),
     notes TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (appointment_id, patient_id),
-    UNIQUE (doctor_id, appointment_datetime),
-    UNIQUE (patient_id, appointment_datetime)
+    UNIQUE (appointment_id, patient_id)
 );
 
 -- Prevent a doctor from having overlapping scheduled/completed appointments.
--- Note: This is stricter and more realistic than UNIQUE(doctor_id, appointment_datetime).
+-- Note: This is stricter than enforcing uniqueness only at the exact start time,
+-- and it aligns with status logic by applying only to scheduled/completed rows.
 ALTER TABLE appointment
 ADD CONSTRAINT no_doctor_overlap
 EXCLUDE USING gist (
