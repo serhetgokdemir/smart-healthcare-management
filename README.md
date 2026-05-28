@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project provides a comprehensive implementation of a scalable, multi-user database system for a smart healthcare management scenario. The system is designed to manage data for a network of hospitals, including information about patients, doctors, appointments, medical records, billing, and more.
+This project provides a database system for a smart healthcare management scenario. The system is designed to manage data for a network of hospitals, including information about patients, doctors, appointments, medical records, billing, and more.
 
 The implementation uses PostgreSQL and includes a complete database schema, sample data, advanced queries, and detailed documentation on the design choices, normalization, and performance considerations.
 
