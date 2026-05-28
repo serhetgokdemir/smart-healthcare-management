@@ -30,6 +30,8 @@ Let's start with an intentionally unnormalized table, `appointment_full_info`. T
 We eliminate the repeating groups by creating separate tables for diagnoses and prescriptions related to a visit. In the implemented schema, diagnoses and prescriptions attach to a patient's 
 medical record (and prescriptions further decompose into line items).
 
+The appointment_id-based diagnosis and prescription tables shown below are conceptual intermediate examples. In the final implemented schema, clinical data is attached to `medical_record`.
+
 **Decomposition:**
 1.  Create a diagnosis table to hold diagnoses for each visit/record.
 2.  Create a prescription table (and line items) to hold medications for each visit/record.

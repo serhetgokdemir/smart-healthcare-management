@@ -52,20 +52,16 @@ This table is a subtype of `app_user` and stores doctor-specific information.
 
 This table records appointments between patients and doctors.
 
-**Attributes:** `appointment_id`, `patient_id`, `doctor_id`, `appointment_datetime`, `status`, `notes`
+**Attributes:** `appointment_id`, `patient_id`, `doctor_id`, `appointment_datetime`, `duration_minutes`, `status`, `notes`
 
 **Functional Dependencies:**
--   `{appointment_id} -> {patient_id, doctor_id, appointment_datetime, status, notes}`
+-   `{appointment_id} -> {patient_id, doctor_id, appointment_datetime, duration_minutes, status, notes}`
     -   The primary key `appointment_id` determines all other attributes of the appointment.
--   `{patient_id, appointment_datetime} -> {appointment_id, doctor_id, status, notes}`
-    -   A patient cannot have two appointments at the exact same time. This is enforced with a `UNIQUE (patient_id, appointment_datetime)` constraint.
--   `{doctor_id, appointment_datetime} -> {appointment_id, patient_id, status, notes}`
-    -   A doctor cannot have two appointments at the exact same time. This is enforced with a `UNIQUE (doctor_id, appointment_datetime)` constraint.
+
+Note: The implemented schema enforces no overlap for scheduled/completed appointments using exclusion constraints over a time range (based on `appointment_datetime` and `duration_minutes`). This is a business rule constraint rather than a strict functional dependency that yields additional candidate keys.
 
 **Candidate Keys:**
 -   `{appointment_id}` (Primary Key)
--   `{patient_id, appointment_datetime}`
--   `{doctor_id, appointment_datetime}`
 
 **Normalization Analysis:**
 -   The table is in **BCNF**.
@@ -101,9 +97,8 @@ This table stores billing information related to appointments or other services.
 **Functional Dependencies:**
 -   `{bill_id} -> {patient_id, appointment_id, amount, issue_date, due_date, status}`
     -   The primary key `bill_id` determines all other attributes.
--   `{appointment_id} -> {bill_id, patient_id, amount, issue_date, due_date, status}`
-    -   For non-null appointment-linked bills, each appointment generates at most one bill, so `appointment_id` (which is UNIQUE when present) can act as a determinant.
-    -   However, because `appointment_id` is nullable, it should be treated as a conditional determinant rather than a full candidate key over the entire `bill` relation.
+
+Note: The only full candidate key of the bill table is `{bill_id}`. For non-null appointment-linked bills, `appointment_id` is unique and acts as a conditional determinant, but it is not treated as a full candidate key because it is nullable.
 
 **Candidate Keys:**
 -   `{bill_id}`
@@ -112,4 +107,4 @@ Note: `appointment_id` is UNIQUE when present, but since it is nullable it is no
 
 **Normalization Analysis:**
 -   The table is in **BCNF**.
--   **Reasoning:** The determinants are `{bill_id}` and `{appointment_id}`. Both are candidate keys. There are no transitive dependencies. For example, `patient_id` does not determine the `amount` or `status`. The table is well-normalized and in BCNF.
+-   **Reasoning:** The only non-trivial functional dependency is determined by `{bill_id}`, which is a candidate key. Therefore, the table satisfies BCNF.
