@@ -11,6 +11,9 @@ DROP TABLE IF EXISTS
     patient, department, hospital, app_user
 CASCADE;
 
+-- Required for exclusion constraints using GiST with scalar equality
+CREATE EXTENSION IF NOT EXISTS btree_gist;
+
 -- -------------------------------------------------
 -- Hospitals and Departments
 -- -------------------------------------------------
@@ -104,13 +107,28 @@ CREATE TABLE appointment (
     appointment_id SERIAL PRIMARY KEY,
     patient_id INT NOT NULL REFERENCES patient(patient_id) ON DELETE CASCADE,
     doctor_id INT NOT NULL REFERENCES doctor(doctor_id) ON DELETE CASCADE,
-    appointment_datetime TIMESTAMPTZ NOT NULL,
+    appointment_datetime TIMESTAMP NOT NULL,
+        duration_minutes INT NOT NULL DEFAULT 30 CHECK (duration_minutes > 0),
     status VARCHAR(20) NOT NULL CHECK (status IN ('scheduled', 'completed', 'cancelled', 'no-show')),
     notes TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (appointment_id, patient_id),
     UNIQUE (doctor_id, appointment_datetime),
     UNIQUE (patient_id, appointment_datetime)
 );
+
+-- Prevent a doctor from having overlapping scheduled/completed appointments.
+-- Note: This is stricter and more realistic than UNIQUE(doctor_id, appointment_datetime).
+ALTER TABLE appointment
+ADD CONSTRAINT no_doctor_overlap
+EXCLUDE USING gist (
+    doctor_id WITH =,
+    tsrange(
+        appointment_datetime,
+        appointment_datetime + duration_minutes * INTERVAL '1 minute'
+    ) WITH &&
+)
+WHERE (status IN ('scheduled', 'completed'));
 
 CREATE TABLE medical_record (
     record_id SERIAL PRIMARY KEY,
@@ -118,7 +136,8 @@ CREATE TABLE medical_record (
     doctor_id INT NOT NULL REFERENCES doctor(doctor_id) ON DELETE RESTRICT,
     appointment_id INT REFERENCES appointment(appointment_id) ON DELETE SET NULL,
     record_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    summary TEXT
+    summary TEXT,
+    UNIQUE (record_id, patient_id)
 );
 
 CREATE TABLE diagnosis (
@@ -165,7 +184,8 @@ CREATE TABLE lab_result (
     record_id INT REFERENCES medical_record(record_id) ON DELETE SET NULL,
     result_date DATE NOT NULL,
     result_value VARCHAR(100) NOT NULL,
-    status VARCHAR(20) CHECK (status IN ('normal', 'abnormal', 'pending'))
+    status VARCHAR(20) CHECK (status IN ('normal', 'abnormal', 'pending')),
+    FOREIGN KEY (record_id, patient_id) REFERENCES medical_record(record_id, patient_id)
 );
 
 -- -------------------------------------------------
@@ -192,7 +212,8 @@ CREATE TABLE bill (
     amount NUMERIC(10, 2) NOT NULL CHECK (amount >= 0),
     issue_date DATE NOT NULL DEFAULT CURRENT_DATE,
     due_date DATE NOT NULL,
-    status VARCHAR(20) NOT NULL CHECK (status IN ('unpaid', 'paid', 'partially_paid', 'overdue'))
+    status VARCHAR(20) NOT NULL CHECK (status IN ('unpaid', 'paid', 'partially_paid', 'overdue')),
+    FOREIGN KEY (appointment_id, patient_id) REFERENCES appointment(appointment_id, patient_id)
 );
 
 CREATE TABLE payment (
