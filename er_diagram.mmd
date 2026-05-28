@@ -1,0 +1,178 @@
+erDiagram
+    app_user {
+        int user_id PK
+        varchar first_name
+        varchar last_name
+        varchar email UK
+        varchar password_hash
+        date date_of_birth
+        varchar street
+        varchar district
+        varchar city
+        varchar postal_code
+        varchar country
+        timestamp created_at
+    }
+
+    patient {
+        int patient_id PK "FK to app_user"
+        varchar emergency_contact_name
+        varchar emergency_contact_phone
+    }
+
+    doctor {
+        int doctor_id PK "FK to app_user"
+        varchar license_number UK
+        int department_id FK
+    }
+
+    admin {
+        int admin_id PK "FK to app_user"
+        varchar permissions
+    }
+
+    hospital {
+        int hospital_id PK
+        varchar name
+        varchar address
+    }
+
+    department {
+        int department_id PK
+        int hospital_id FK
+        varchar name
+    }
+
+    specialty {
+        int specialty_id PK
+        varchar name UK
+    }
+
+    doctor_specialty {
+        int doctor_id PK, FK
+        int specialty_id PK, FK
+    }
+
+    appointment {
+        int appointment_id PK
+        int patient_id FK
+        int doctor_id FK
+        timestamp appointment_datetime
+        varchar status
+        text notes
+    }
+
+    medical_record {
+        int record_id PK
+        int patient_id FK
+        int doctor_id FK
+        date record_date
+        text summary
+    }
+
+    diagnosis {
+        int diagnosis_id PK
+        int record_id FK
+        varchar icd10_code
+        text description
+    }
+
+    prescription {
+        int prescription_id PK
+        int record_id FK
+        date prescription_date
+    }
+
+    prescription_item {
+        int prescription_id PK, FK
+        int item_number PK
+        int medication_id FK
+        varchar dosage
+        varchar frequency
+        int duration_days
+    }
+
+    medication {
+        int medication_id PK
+        varchar name
+        text description
+    }
+
+    lab_test {
+        int test_id PK
+        varchar name
+        varchar description
+    }
+
+    lab_result {
+        int result_id PK
+        int patient_id FK
+        int test_id FK
+        date result_date
+        varchar result_value
+        varchar status
+    }
+
+    insurance_provider {
+        int provider_id PK
+        varchar name
+    }
+
+    patient_insurance {
+        int patient_id PK, FK
+        int provider_id PK, FK
+        varchar policy_number
+    }
+
+    bill {
+        int bill_id PK
+        int patient_id FK
+        int appointment_id FK
+        decimal amount
+        date issue_date
+        date due_date
+        varchar status
+    }
+
+    payment {
+        int payment_id PK
+        int bill_id FK
+        decimal amount
+        date payment_date
+        varchar payment_method
+    }
+
+    user_phone {
+        int user_id PK, FK
+        varchar phone_number PK
+    }
+
+    patient_allergy {
+        int patient_id PK, FK
+        varchar allergy_name PK
+    }
+
+    app_user ||--o{ patient : "is a"
+    app_user ||--o{ doctor : "is a"
+    app_user ||--o{ admin : "is a"
+    app_user ||--|{ user_phone : "has"
+    patient ||--|{ patient_allergy : "has"
+    patient ||--o{ appointment : "schedules"
+    patient ||--o{ medical_record : "has"
+    patient ||--o{ lab_result : "has"
+    patient ||--|{ patient_insurance : "has"
+    patient ||--o{ bill : "receives"
+    doctor ||--o{ appointment : "conducts"
+    doctor ||--o{ medical_record : "creates"
+    doctor ||--|{ doctor_specialty : "has"
+    hospital ||--|{ department : "contains"
+    department ||--o{ doctor : "employs"
+    specialty ||--|{ doctor_specialty : "defines"
+    medical_record ||--o{ diagnosis : "contains"
+    medical_record ||--o{ prescription : "contains"
+    prescription ||--|{ prescription_item : "details"
+    medication ||--o{ prescription_item : "is"
+    lab_test ||--o{ lab_result : "is for"
+    insurance_provider ||--|{ patient_insurance : "provides"
+    appointment ||--o{ bill : "generates"
+    bill ||--o{ payment : "has"
