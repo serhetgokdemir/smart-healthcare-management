@@ -17,4 +17,4 @@ We compared the execution time of several key queries before and after creating 
     \item \textbf{With B+ Tree Index on \texttt{appointment(patient\_id)}:} The database can use an index scan to quickly locate matching rows. See the \texttt{EXPLAIN ANALYZE} output for the plan and timing.
 \end{itemize}
 
-The results clearly demonstrate that using indexes significantly reduces query execution time, especially for large datasets. The choice between B+ Tree and Hash index depends on the query type, with B+ Trees being more versatile for both range and point queries.
+On larger datasets, indexes are expected to improve query performance by reducing the amount of data scanned and by avoiding expensive sorts. With a small sample dataset, PostgreSQL may still choose sequential scans, which is not an error but a cost-based planner decision.

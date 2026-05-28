@@ -3,6 +3,11 @@
 -- Description: Demonstrates index creation and performance comparison.
 -- =================================================================
 
+-- Note:
+-- Because the sample dataset is small, PostgreSQL may still choose a sequential scan
+-- even after an index is created. This is not an error; index benefits are clearer
+-- on larger datasets.
+
 -- Clean up any existing indexes to ensure a clean run
 DROP INDEX IF EXISTS idx_appointment_patient_id;
 DROP INDEX IF EXISTS idx_appointment_doctor_datetime;
@@ -71,7 +76,10 @@ SELECT user_id, first_name, email FROM app_user WHERE email = 'jane.doe@example.
 
 -- Result (example): Index Scan using app_user_email_key... (B-Tree)
 
--- Create a HASH index. Note: B-Tree is often good enough, but this demonstrates the syntax.
+-- Better explanation:
+-- PostgreSQL automatically creates a B-tree index for UNIQUE(email).
+-- The following HASH index is included only to demonstrate hash index syntax.
+-- In a real system, the UNIQUE B-tree index is usually sufficient.
 CREATE INDEX idx_user_email_hash ON app_user USING HASH (email);
 
 -- After index:
