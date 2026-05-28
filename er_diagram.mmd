@@ -35,6 +35,7 @@ erDiagram
         int hospital_id PK
         varchar name
         varchar address
+        timestamp created_at
     }
 
     department {
@@ -60,12 +61,14 @@ erDiagram
         timestamp appointment_datetime
         varchar status
         text notes
+        timestamp created_at
     }
 
     medical_record {
         int record_id PK
         int patient_id FK
         int doctor_id FK
+        int appointment_id FK
         date record_date
         text summary
     }
@@ -75,6 +78,7 @@ erDiagram
         int record_id FK
         varchar icd10_code
         text description
+        boolean is_chronic
     }
 
     prescription {
@@ -108,6 +112,7 @@ erDiagram
         int result_id PK
         int patient_id FK
         int test_id FK
+        int record_id FK
         date result_date
         varchar result_value
         varchar status

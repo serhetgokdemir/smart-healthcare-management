@@ -13,8 +13,8 @@ We compared the execution time of several key queries before and after creating 
 
 \textbf{Example Query: Find all appointments for a specific patient.}
 \begin{itemize}
-    \item \textbf{Without Index:} The database may perform a sequential scan on the \texttt{appointment} table. Execution time: XX ms.
-    \item \textbf{With B+ Tree Index on \texttt{appointment(patient\_id)}:} The database can use an index scan to quickly locate matching rows. Execution time: YY ms.
+    \item \textbf{Without Index:} The database may perform a sequential scan on the \texttt{appointment} table. See the \texttt{EXPLAIN ANALYZE} output for the plan and timing.
+    \item \textbf{With B+ Tree Index on \texttt{appointment(patient\_id)}:} The database can use an index scan to quickly locate matching rows. See the \texttt{EXPLAIN ANALYZE} output for the plan and timing.
 \end{itemize}
 
 The results clearly demonstrate that using indexes significantly reduces query execution time, especially for large datasets. The choice between B+ Tree and Hash index depends on the query type, with B+ Trees being more versatile for both range and point queries.

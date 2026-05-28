@@ -27,11 +27,12 @@ Let's start with an intentionally unnormalized table, `appointment_full_info`. T
 
 **Rule:** Ensure all attributes are atomic and there are no repeating groups. Each cell should hold a single value.
 
-We eliminate the repeating groups by creating separate tables for diagnoses and prescriptions related to an appointment.
+We eliminate the repeating groups by creating separate tables for diagnoses and prescriptions related to a visit. In the implemented schema, diagnoses and prescriptions attach to a patient's 
+medical record (and prescriptions further decompose into line items).
 
 **Decomposition:**
-1.  Create `appointment_diagnosis` to hold diagnoses for each appointment.
-2.  Create `appointment_prescription` to hold medications for each appointment.
+1.  Create a diagnosis table to hold diagnoses for each visit/record.
+2.  Create a prescription table (and line items) to hold medications for each visit/record.
 
 The main table now looks like this:
 
@@ -42,7 +43,7 @@ The main table now looks like this:
 | 101 | 2026-06-10 10:00 | 1 | John | ... | City General |
 | 102 | 2026-06-10 11:00 | 2 | Jane | ... | City General |
 
-**`appointment_diagnosis`**
+**(Conceptual) Diagnosis table**
 
 | appointment_id (FK) | diagnosis_code |
 | :--- | :--- |
@@ -50,7 +51,7 @@ The main table now looks like this:
 | 101 | Z00.00 |
 | 102 | G43.909 |
 
-**`appointment_prescription`**
+**(Conceptual) Prescription table**
 
 | appointment_id (FK) | medication_name | dosage |
 | :--- | :--- | :--- |
@@ -94,28 +95,29 @@ We decompose the table to eliminate these transitive dependencies.
 
 **Final Normalized Tables (in 3NF):**
 
+Note: The final implementation uses a supertype/subtype structure. Common person attributes (name, email, address, etc.) are stored in `app_user`, while `patient`, `doctor`, and `admin` store role-specific attributes and reference `app_user(user_id)`.
+
 **`hospital`**
 - `hospital_id` (PK)
-- `hospital_name`
-- FD: `{hospital_id} -> {hospital_name}`
+- `name`
+- FD: `{hospital_id} -> {name}`
 
 **`department`**
 - `department_id` (PK)
-- `department_name`
+- `name`
 - `hospital_id` (FK)
-- FD: `{department_id} -> {department_name, hospital_id}`
+- FD: `{department_id} -> {name, hospital_id}`
 
 **`doctor`**
-- `doctor_id` (PK)
-- `doctor_first_name`, `doctor_last_name`
-- `doctor_license` (Candidate Key)
+- `doctor_id` (PK, also FK to `app_user.user_id`)
+- `license_number` (Candidate Key)
 - `department_id` (FK)
-- FDs: `{doctor_id} -> {all other attributes}`, `{doctor_license} -> {all other attributes}`
+- FDs: `{doctor_id} -> {license_number, department_id}`, `{license_number} -> {doctor_id, department_id}`
 
 **`patient`**
-- `patient_id` (PK)
-- `patient_first_name`, `patient_last_name`, `patient_dob`
-- FD: `{patient_id} -> {all other attributes}`
+- `patient_id` (PK, also FK to `app_user.user_id`)
+- (Role-specific attributes only; personal attributes live in `app_user`)
+- FD: `{patient_id} -> {all patient-specific attributes}`
 
 **`appointment`**
 - `appointment_id` (PK)
