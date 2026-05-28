@@ -17,34 +17,34 @@ echo "[2/6] Creating database..."
 createdb "$DB_NAME"
 
 echo ""
-echo "[3/6] Running schema.sql..."
-if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f schema.sql; then
+echo "[3/6] Running sql/schema.sql..."
+if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f sql/schema.sql; then
     echo ""
-    echo "ERROR: schema.sql failed."
+    echo "ERROR: sql/schema.sql failed."
     exit 1
 fi
 
 echo ""
-echo "[4/6] Running data.sql..."
-if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f data.sql; then
+echo "[4/6] Running sql/data.sql..."
+if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f sql/data.sql; then
     echo ""
-    echo "ERROR: data.sql failed."
+    echo "ERROR: sql/data.sql failed."
     exit 1
 fi
 
 echo ""
-echo "[5/6] Running queries.sql..."
-if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f queries.sql; then
+echo "[5/6] Running sql/queries.sql..."
+if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f sql/queries.sql; then
     echo ""
-    echo "ERROR: queries.sql failed."
+    echo "ERROR: sql/queries.sql failed."
     exit 1
 fi
 
 echo ""
-echo "[6/6] Running indexing.sql..."
-if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f indexing.sql; then
+echo "[6/6] Running sql/indexing.sql..."
+if ! psql -X -v ON_ERROR_STOP=1 -P pager=off -d "$DB_NAME" -f sql/indexing.sql; then
     echo ""
-    echo "ERROR: indexing.sql failed."
+    echo "ERROR: sql/indexing.sql failed."
     exit 1
 fi
 

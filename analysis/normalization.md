@@ -149,4 +149,4 @@ Let's analyze our 3NF tables:
 
     The determinants are `{doctor_id}` and `{license_number}`. Both are candidate keys for the `doctor` table. Since every determinant is a candidate key, the `doctor` table **is in BCNF.**
 
-**Conclusion:** The final decomposed schema (`hospital`, `department`, `doctor`, `patient`, `appointment`, etc.) is in BCNF, providing a robust, scalable, and anomaly-free design. The schema implemented in `schema.sql` follows this normalized structure.
+**Conclusion:** The final decomposed schema (`hospital`, `department`, `doctor`, `patient`, `appointment`, etc.) is in BCNF, providing a robust, scalable, and anomaly-free design. The schema implemented in `sql/schema.sql` follows this normalized structure.

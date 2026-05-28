@@ -38,30 +38,30 @@ Notes:
 
 - The default database name is `smart_healthcare` (edit `DB_NAME` in `setup.sh` if needed).
 - This script is destructive for the target database name.
-- `queries.sql` is run as a functional smoke test; `indexing.sql` is a performance demo and can produce verbose `EXPLAIN ANALYZE` output.
+- `sql/queries.sql` is run as a functional smoke test; `sql/indexing.sql` is a performance demo and can produce verbose `EXPLAIN ANALYZE` output.
 
 ### Option B: Run the SQL files manually
 
 If you prefer, you can run the SQL scripts in order using `psql` (or a GUI client that supports PostgreSQL):
 
-1.  **`schema.sql`**: This script creates all the tables, constraints, and relationships. It will first drop any existing tables to ensure a clean setup.
+1.  **`sql/schema.sql`**: This script creates all the tables, constraints, and relationships. It will first drop any existing tables to ensure a clean setup.
     ```bash
-    psql -U your_username -d your_database -f schema.sql
+    psql -U your_username -d your_database -f sql/schema.sql
     ```
 
-2.  **`data.sql`**: This script populates the tables with realistic sample data. It's important to run this after the schema is created.
+2.  **`sql/data.sql`**: This script populates the tables with realistic sample data. It's important to run this after the schema is created.
     ```bash
-    psql -U your_username -d your_database -f data.sql
+    psql -U your_username -d your_database -f sql/data.sql
     ```
 
-3.  **`queries.sql`**: This script contains a set of advanced SQL queries for you to test and see how data can be retrieved from the system. You can run this file or execute the queries one by one.
+3.  **`sql/queries.sql`**: This script contains a set of advanced SQL queries for you to test and see how data can be retrieved from the system. You can run this file or execute the queries one by one.
     ```bash
-    psql -U your_username -d your_database -f queries.sql
+    psql -U your_username -d your_database -f sql/queries.sql
     ```
 
-4.  **`indexing.sql`**: This script demonstrates the creation of indexes and includes `EXPLAIN ANALYZE` commands to show the performance benefits. It's best to run the `EXPLAIN ANALYZE` statements individually to observe the query plans before and after index creation.
+4.  **`sql/indexing.sql`**: This script demonstrates the creation of indexes and includes `EXPLAIN ANALYZE` commands to show the performance benefits. It's best to run the `EXPLAIN ANALYZE` statements individually to observe the query plans before and after index creation.
     ```bash
-    psql -U your_username -d your_database -f indexing.sql
+    psql -U your_username -d your_database -f sql/indexing.sql
     ```
 
     Note:
@@ -89,17 +89,18 @@ Tip:
 
 -   `README.md`: This file.
 -   `setup.sh`: One-command database setup script (drops/creates DB and runs SQL files).
--   `er_diagram.mmd`: Source code for the ER diagram in Mermaid format.
--   `eer_diagram.mmd`: Source code for the EER diagram showing specialization/generalization.
--   `er_diagram.png`: Exported ER diagram image used in the LaTeX report.
--   `eer_diagram.png`: Exported EER diagram image used in the LaTeX report.
--   `schema.sql`: Contains all `CREATE TABLE` statements for the database schema.
--   `data.sql`: Contains `INSERT` statements to populate the database with sample data.
--   `queries.sql`: A collection of advanced SQL queries to demonstrate the system's capabilities.
--   `indexing.sql`: SQL script for creating indexes and analyzing query performance.
--   `normalization.md`: A detailed explanation of the normalization process from UNF to BCNF.
--   `fd.md`: A document listing the functional dependencies for the major tables.
--   `relational_algebra_and_calculus.md`: Examples of queries written in relational algebra and tuple relational calculus.
+-   `sql/`: SQL scripts.
+    -   `sql/schema.sql`: Tables, constraints, and relationships.
+    -   `sql/data.sql`: Sample data.
+    -   `sql/queries.sql`: Advanced queries.
+    -   `sql/indexing.sql`: Indexing + `EXPLAIN ANALYZE` demo.
+-   `analysis/`: Design/analysis writeups.
+    -   `analysis/normalization.md`: Normalization process from UNF to BCNF.
+    -   `analysis/fd.md`: Functional dependencies.
+    -   `analysis/relational_algebra_and_calculus.md`: Relational algebra and tuple relational calculus.
+-   `diagrams/`: ER/EER diagrams (Mermaid sources + exported PNGs).
+    -   `diagrams/er_diagram.mmd`, `diagrams/er_diagram.png`
+    -   `diagrams/eer_diagram.mmd`, `diagrams/eer_diagram.png`
 -   `docs/report.tex`: Main LaTeX entry file for the report.
 -   `docs/sections/`: LaTeX sections included by the report.
 

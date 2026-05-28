@@ -5,24 +5,24 @@ The Entity-Relationship (ER) diagram provides a high-level view of the database 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{../er_diagram.png}
+    \includegraphics[width=\textwidth]{../diagrams/er_diagram.png}
     \caption{Entity-Relationship (ER) Diagram.}
     \label{fig:er_diagram}
 \end{figure}
 
-\textit{Note: The exported PNG is included in the repository. If you edit \texttt{er\_diagram.mmd}, re-export it to \texttt{er\_diagram.png}.}
+\textit{Note: The exported PNG is included in the repository. If you edit \texttt{diagrams/er\_diagram.mmd}, re-export it to \texttt{diagrams/er\_diagram.png}.}
 
 \subsection{Enhanced ER (EER) Diagram}
 The Enhanced ER (EER) diagram extends the ER model with concepts like specialization and generalization. In our model, an \texttt{app\_user} supertype is specialized into \texttt{patient}, \texttt{doctor}, and \texttt{admin} subtypes.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{../eer_diagram.png}
+    \includegraphics[width=\textwidth]{../diagrams/eer_diagram.png}
     \caption{Enhanced Entity-Relationship (EER) Diagram.}
     \label{fig:eer_diagram}
 \end{figure}
 
-\textit{Note: The exported PNG is included in the repository. If you edit \texttt{eer\_diagram.mmd}, re-export it to \texttt{eer\_diagram.png}.}
+\textit{Note: The exported PNG is included in the repository. If you edit \texttt{diagrams/eer\_diagram.mmd}, re-export it to \texttt{diagrams/eer\_diagram.png}.}
 
 \subsubsection{Explanation of EER Concepts}
 Here, we used specialization to model different types of users. For example, \texttt{doctor} and \texttt{patient} are specializations of a more general \texttt{app\_user} entity, inheriting common attributes like name and contact information while also having their own specific attributes.
