@@ -58,14 +58,14 @@ This table records appointments between patients and doctors.
 -   `{appointment_id} -> {patient_id, doctor_id, appointment_datetime, status, notes}`
     -   The primary key `appointment_id` determines all other attributes of the appointment.
 -   `{patient_id, appointment_datetime} -> {appointment_id, doctor_id, status, notes}`
-    -   A patient cannot have two appointments at the exact same time. This could be a candidate key if enforced with a unique constraint.
+    -   A patient cannot have two appointments at the exact same time. This is enforced with a `UNIQUE (patient_id, appointment_datetime)` constraint.
 -   `{doctor_id, appointment_datetime} -> {appointment_id, patient_id, status, notes}`
-    -   A doctor cannot have two appointments at the exact same time. This could also be a candidate key.
+    -   A doctor cannot have two appointments at the exact same time. This is enforced with a `UNIQUE (doctor_id, appointment_datetime)` constraint.
 
 **Candidate Keys:**
 -   `{appointment_id}` (Primary Key)
--   `{patient_id, appointment_datetime}` (If a business rule enforces it)
--   `{doctor_id, appointment_datetime}` (If a business rule enforces it)
+-   `{patient_id, appointment_datetime}`
+-   `{doctor_id, appointment_datetime}`
 
 **Normalization Analysis:**
 -   The table is in **BCNF**.

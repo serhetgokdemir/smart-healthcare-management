@@ -107,7 +107,9 @@ CREATE TABLE appointment (
     appointment_datetime TIMESTAMPTZ NOT NULL,
     status VARCHAR(20) NOT NULL CHECK (status IN ('scheduled', 'completed', 'cancelled', 'no-show')),
     notes TEXT,
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (doctor_id, appointment_datetime),
+    UNIQUE (patient_id, appointment_datetime)
 );
 
 CREATE TABLE medical_record (
