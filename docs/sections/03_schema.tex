@@ -12,4 +12,5 @@ Key mapping decisions included:
     \item \textbf{N:M Relationships:} Many-to-many relationships were implemented using separate linking tables (e.g., \texttt{doctor\_specialty} for Doctor--Specialty and \texttt{patient\_insurance} for Patient--Insurance Provider).
     \item \textbf{Weak Entities:} \texttt{prescription\_item} is modeled as a weak entity identified by its owning \texttt{prescription} plus a partial key (\texttt{item\_number}).
     \item \textbf{Multivalued Attributes:} Multivalued attributes are handled via separate tables (e.g., \texttt{user\_phone} and \texttt{patient\_allergy}).
+    \item \textbf{Time Representation:} \texttt{appointment\_datetime} is stored as \texttt{TIMESTAMP} (without time zone), assuming appointments are scheduled in the hospital's local time zone.
 \end{itemize}

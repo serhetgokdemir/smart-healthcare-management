@@ -142,8 +142,8 @@ Let's analyze our 3NF tables:
 - **`patient`**: The only determinant is `patient_id`, which is the primary key. **In BCNF.**
 - **`appointment`**: The only determinant is `appointment_id`, which is the primary key. **In BCNF.**
 - **`doctor`**: We have two FDs:
-    1.  `{doctor_id} -> {first_name, last_name, license_number, department_id}`
-    2.  `{license_number} -> {doctor_id, first_name, last_name, department_id}`
+    1.  `{doctor_id} -> {license_number, department_id}`
+    2.  `{license_number} -> {doctor_id, department_id}`
 
     The determinants are `{doctor_id}` and `{license_number}`. Both are candidate keys for the `doctor` table. Since every determinant is a candidate key, the `doctor` table **is in BCNF.**
 

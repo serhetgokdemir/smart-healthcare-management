@@ -14,7 +14,8 @@ The implementation uses PostgreSQL and includes a complete database schema, samp
 
 Schema notes:
 
-- The schema uses a GiST exclusion constraint to prevent overlapping doctor appointments. This requires the `btree_gist` extension (created via `CREATE EXTENSION IF NOT EXISTS btree_gist;`). Your PostgreSQL role must have permission to create extensions.
+- The schema uses GiST exclusion constraints to prevent overlapping doctor and patient appointments. This requires the `btree_gist` extension (created via `CREATE EXTENSION IF NOT EXISTS btree_gist;`). Your PostgreSQL role must have permission to create extensions.
+- The system stores `appointment_datetime` as `TIMESTAMP` because appointments are assumed to be scheduled in the hospital’s local time zone.
 
 For the PDF report:
 

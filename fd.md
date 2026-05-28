@@ -103,10 +103,12 @@ This table stores billing information related to appointments or other services.
     -   The primary key `bill_id` determines all other attributes.
 -   `{appointment_id} -> {bill_id, patient_id, amount, issue_date, due_date, status}`
     -   For non-null appointment-linked bills, each appointment generates at most one bill, so `appointment_id` (which is UNIQUE when present) can act as a determinant.
+    -   However, because `appointment_id` is nullable, it should be treated as a conditional determinant rather than a full candidate key over the entire `bill` relation.
 
 **Candidate Keys:**
 -   `{bill_id}`
--   `{appointment_id}` (Only for non-null appointment-linked bills; `appointment_id` is nullable.)
+
+Note: `appointment_id` is UNIQUE when present, but since it is nullable it is not treated as a full candidate key for the entire table.
 
 **Normalization Analysis:**
 -   The table is in **BCNF**.
