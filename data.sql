@@ -209,7 +209,7 @@ INSERT INTO bill (patient_id, appointment_id, amount, issue_date, due_date, stat
 -- Some bills not tied to an appointment (e.g., for lab work)
 (1, NULL, 75.00, '2026-06-10', '2026-07-10', 'paid'),
 (3, NULL, 50.00, '2026-06-11', '2026-07-11', 'unpaid'),
-(5, NULL, 120.00, '2026-05-21', '2026-06-21', 'overdue'),
+(5, NULL, 120.00, '2026-04-15', '2026-05-20', 'overdue'),
 (2, NULL, 90.00, '2026-05-19', '2026-06-19', 'paid');
 
 INSERT INTO payment (bill_id, amount, payment_date, payment_method) VALUES

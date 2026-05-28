@@ -12,6 +12,10 @@ The implementation uses PostgreSQL and includes a complete database schema, samp
 - Command-line tools available: `psql`, `createdb`, `dropdb`.
 - A PostgreSQL role/user with permission to create and drop databases (needed for `setup.sh`).
 
+Schema notes:
+
+- The schema uses a GiST exclusion constraint to prevent overlapping doctor appointments. This requires the `btree_gist` extension (created via `CREATE EXTENSION IF NOT EXISTS btree_gist;`). Your PostgreSQL role must have permission to create extensions.
+
 For the PDF report:
 
 - A LaTeX distribution (e.g., TeX Live) and `latexmk`.
@@ -57,6 +61,10 @@ If you prefer, you can run the SQL scripts in order using `psql` (or a GUI clien
     ```bash
     psql -U your_username -d your_database -f indexing.sql
     ```
+
+    Note:
+
+    - Because the sample dataset is small, PostgreSQL may still choose sequential scans even after an index is created. This is normal; index benefits are clearer on larger datasets.
 
 ## Build the Report PDF
 

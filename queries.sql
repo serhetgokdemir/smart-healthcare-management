@@ -81,7 +81,7 @@ GROUP BY p_user.user_id, p_user.first_name, p_user.last_name
 ORDER BY total_billed DESC;
 
 
--- Query 6: List all unpaid or partially paid bills that are past their due date (overdue).
+-- Query 6: List all unpaid/partially paid/overdue bills that are past their due date.
 -- Demonstrates: Filtering by date, multiple conditions in WHERE.
 SELECT
     b.bill_id,
@@ -92,7 +92,7 @@ SELECT
     b.status
 FROM bill b
 JOIN app_user p_user ON b.patient_id = p_user.user_id
-WHERE b.status IN ('unpaid', 'partially_paid')
+WHERE b.status IN ('unpaid', 'partially_paid', 'overdue')
   AND b.due_date < CURRENT_DATE
 ORDER BY b.due_date;
 
