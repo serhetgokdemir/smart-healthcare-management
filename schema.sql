@@ -108,7 +108,7 @@ CREATE TABLE appointment (
     patient_id INT NOT NULL REFERENCES patient(patient_id) ON DELETE CASCADE,
     doctor_id INT NOT NULL REFERENCES doctor(doctor_id) ON DELETE CASCADE,
     appointment_datetime TIMESTAMP NOT NULL,
-        duration_minutes INT NOT NULL DEFAULT 30 CHECK (duration_minutes > 0),
+    duration_minutes INT NOT NULL DEFAULT 30 CHECK (duration_minutes > 0),
     status VARCHAR(20) NOT NULL CHECK (status IN ('scheduled', 'completed', 'cancelled', 'no-show')),
     notes TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -123,6 +123,18 @@ ALTER TABLE appointment
 ADD CONSTRAINT no_doctor_overlap
 EXCLUDE USING gist (
     doctor_id WITH =,
+    tsrange(
+        appointment_datetime,
+        appointment_datetime + duration_minutes * INTERVAL '1 minute'
+    ) WITH &&
+)
+WHERE (status IN ('scheduled', 'completed'));
+
+-- Prevent a patient from having overlapping scheduled/completed appointments.
+ALTER TABLE appointment
+ADD CONSTRAINT no_patient_overlap
+EXCLUDE USING gist (
+    patient_id WITH =,
     tsrange(
         appointment_datetime,
         appointment_datetime + duration_minutes * INTERVAL '1 minute'
