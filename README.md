@@ -37,6 +37,7 @@ Notes:
 
 - The default database name is `smart_healthcare` (edit `DB_NAME` in `setup.sh` if needed).
 - This script is destructive for the target database name.
+- `queries.sql` is run as a functional smoke test; `indexing.sql` is a performance demo and can produce verbose `EXPLAIN ANALYZE` output.
 
 ### Option B: Run the SQL files manually
 
