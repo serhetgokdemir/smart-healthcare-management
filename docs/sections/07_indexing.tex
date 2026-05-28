@@ -1,0 +1,20 @@
+\section{Indexing and File Structures}
+
+\subsection{Index Implementation}
+To optimize query performance, several indexes were created. The choices include B+ Tree indexes for range queries and Hash indexes for exact lookups where applicable.
+
+\lstinputlisting[language=SQL, caption={Index Creation (\texttt{indexing.sql})}]{../indexing.sql}
+
+\subsection{Performance Analysis}
+This section discusses the performance impact of the implemented indexes.
+
+\subsubsection{Indexed vs. Non-Indexed Query Performance}
+We compared the execution time of several key queries before and after creating indexes. For example, searching for a patient by name or finding all appointments within a specific date range.
+
+\textbf{Example Query: Find a patient by their last name.}
+\begin{itemize}
+    \item \textbf{Without Index:} The database performs a full table scan on the `Patient` table. Execution time: XX ms.
+    \item \textbf{With B+ Tree Index on `LastName`:} The database uses the index to quickly locate the relevant rows. Execution time: YY ms.
+\end{itemize}
+
+The results clearly demonstrate that using indexes significantly reduces query execution time, especially for large datasets. The choice between B+ Tree and Hash index depends on the query type, with B+ Trees being more versatile for both range and point queries.

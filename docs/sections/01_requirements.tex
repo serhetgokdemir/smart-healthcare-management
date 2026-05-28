@@ -1,0 +1,43 @@
+\section{Requirements Analysis}
+
+\subsection{Introduction}
+This section outlines the requirements for the Smart Healthcare Management database system. The primary objective is to create a robust, scalable, and secure system that supports multiple user roles and complex medical data interactions.
+
+\subsection{User Roles and Permissions}
+The system will support the following user roles:
+\begin{itemize}
+    \item \textbf{Patient:} Can view their personal information, appointments, prescriptions, and lab results.
+    \item \textbf{Doctor:} Can manage patient records, schedule appointments, issue prescriptions, and order lab tests.
+    \item \textbf{Administrator:} Can manage hospital, department, and doctor information, overseeing the system's structural data.
+\end{itemize}
+
+\subsection{Core Entities}
+The main entities identified for the system are:
+\begin{itemize}
+    \item Patient
+    \item Doctor
+    \item Hospital
+    \item Department
+    \item Appointment
+    \item Prescription
+    \item Lab Result
+    \item Insurance
+    \item Bill
+\end{itemize}
+
+\subsection{Core Relationships}
+Key relationships between entities include:
+\begin{itemize}
+    \item A \textbf{Doctor} can have many \textbf{Patients} (1-to-N).
+    \item A \textbf{Patient} can have many \textbf{Appointments} (1-to-N).
+    \item A \textbf{Doctor} can work in multiple \textbf{Departments} (N-to-M), which requires a linking table.
+    \item An \textbf{Appointment} must be associated with exactly one \textbf{Patient} and one \textbf{Doctor}.
+\end{itemize}
+
+\subsection{Constraints and Business Rules}
+The system must enforce the following rules:
+\begin{itemize}
+    \item A prescription can only be written by an authorized doctor.
+    \item Every appointment must be linked to an existing patient and doctor.
+    \item Patient medical records are confidential and can only be accessed by authorized personnel.
+\end{itemize}

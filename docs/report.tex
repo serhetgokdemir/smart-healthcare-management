@@ -1,0 +1,68 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{times}
+\usepackage{xcolor}
+
+% --- GEOMETRY ---
+\geometry{a4paper, margin=1in}
+
+% --- HYPERREF SETUP ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% --- LISTINGS (CODE) SETUP ---
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    captionpos=b
+}
+
+% --- DOCUMENT INFO ---
+\title{Design and Implementation of a Scalable Multi-User Database System for Smart Healthcare Management}
+\author{Your Name \\ Your Student ID}
+\date{\today}
+
+% --- DOCUMENT START ---
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+% --- SECTIONS ---
+\input{sections/01_requirements.tex}
+\input{sections/02_diagrams.tex}
+\input{sections/03_schema.tex}
+\input{sections/04_normalization.tex}
+\input{sections/05_queries.tex}
+\input{sections/06_algebra_calculus.tex}
+\input{sections/07_indexing.tex}
+
+\end{document}

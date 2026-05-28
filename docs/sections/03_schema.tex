@@ -1,0 +1,15 @@
+\section{Mapping to Relational Model}
+The ER/EER model was mapped to a relational schema. This section presents the final table structures, including primary keys, foreign keys, and other constraints.
+
+\subsection{Relational Schema}
+The following SQL script contains the \texttt{CREATE TABLE} statements for all tables in the database.
+
+\lstinputlisting[language=SQL, caption={Relational Schema (\texttt{schema.sql})}]{../schema.sql}
+
+\subsection{Mapping Rules Applied}
+Key mapping decisions included:
+\begin{itemize}
+    \item \textbf{N:M Relationships:} Many-to-many relationships, such as `Doctor\_Department`, were implemented using a separate linking table.
+    \item \textbf{Weak Entities:} Weak entities like `Prescription` are identified by a foreign key from their owner entity (`Patient` or `Appointment`).
+    \item \textbf{Multivalued Attributes:} If any existed, they would be handled by creating a separate table.
+\end{itemize}
