@@ -93,7 +93,7 @@ SELECT
 FROM bill b
 JOIN app_user p_user ON b.patient_id = p_user.user_id
 WHERE b.status IN ('unpaid', 'partially_paid', 'overdue')
-  AND b.due_date < CURRENT_DATE
+    AND b.due_date < DATE '2026-07-01'
 ORDER BY b.due_date;
 
 
