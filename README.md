@@ -6,9 +6,37 @@ This project provides a comprehensive implementation of a scalable, multi-user d
 
 The implementation uses PostgreSQL and includes a complete database schema, sample data, advanced queries, and detailed documentation on the design choices, normalization, and performance considerations.
 
+## Prerequisites
+
+- **PostgreSQL** installed and running.
+- Command-line tools available: `psql`, `createdb`, `dropdb`.
+- A PostgreSQL role/user with permission to create and drop databases (needed for `setup.sh`).
+
+For the PDF report:
+
+- A LaTeX distribution (e.g., TeX Live) and `latexmk`.
+
 ## How to Run the SQL Scripts
 
-To set up and populate the database, run the SQL scripts in the following order. You can use a tool like `psql` or any graphical database client that supports PostgreSQL.
+There are two ways to set up and populate the database.
+
+### Option A (Recommended): Run the setup script
+
+The repository includes `setup.sh`, which will **drop and recreate** the database and then run the SQL scripts in order.
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+Notes:
+
+- The default database name is `smart_healthcare` (edit `DB_NAME` in `setup.sh` if needed).
+- This script is destructive for the target database name.
+
+### Option B: Run the SQL files manually
+
+If you prefer, you can run the SQL scripts in order using `psql` (or a GUI client that supports PostgreSQL):
 
 1.  **`schema.sql`**: This script creates all the tables, constraints, and relationships. It will first drop any existing tables to ensure a clean setup.
     ```bash
@@ -30,11 +58,31 @@ To set up and populate the database, run the SQL scripts in the following order.
     psql -U your_username -d your_database -f indexing.sql
     ```
 
+## Build the Report PDF
+
+The LaTeX report source is under `docs/`. To build `report.pdf`:
+
+```bash
+cd docs
+latexmk -pdf -interaction=nonstopmode -halt-on-error report.tex
+```
+
+Output:
+
+- `docs/report.pdf`
+
+Tip:
+
+- If you paste relational algebra/calculus into the LaTeX sources, avoid raw Unicode math symbols when compiling with `pdflatex` (prefer LaTeX commands like `\sigma`, `\in`, `\wedge`).
+
 ## File List
 
 -   `README.md`: This file.
+-   `setup.sh`: One-command database setup script (drops/creates DB and runs SQL files).
 -   `er_diagram.mmd`: Source code for the ER diagram in Mermaid format.
 -   `eer_diagram.mmd`: Source code for the EER diagram showing specialization/generalization.
+-   `er_diagram.png`: Exported ER diagram image used in the LaTeX report.
+-   `eer_diagram.png`: Exported EER diagram image used in the LaTeX report.
 -   `schema.sql`: Contains all `CREATE TABLE` statements for the database schema.
 -   `data.sql`: Contains `INSERT` statements to populate the database with sample data.
 -   `queries.sql`: A collection of advanced SQL queries to demonstrate the system's capabilities.
@@ -42,6 +90,8 @@ To set up and populate the database, run the SQL scripts in the following order.
 -   `normalization.md`: A detailed explanation of the normalization process from UNF to BCNF.
 -   `fd.md`: A document listing the functional dependencies for the major tables.
 -   `relational_algebra_and_calculus.md`: Examples of queries written in relational algebra and tuple relational calculus.
+-   `docs/report.tex`: Main LaTeX entry file for the report.
+-   `docs/sections/`: LaTeX sections included by the report.
 
 ## Database Design Explanation
 
